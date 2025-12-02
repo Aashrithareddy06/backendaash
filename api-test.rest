@@ -1,0 +1,28 @@
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "your@gmail.com",
+  "password": "1234"
+}
+
+###
+POST http://localhost:5000/api/buses/search
+Content-Type: application/json
+
+{
+  "from": "Hyderabad",
+  "to": "Bangalore",
+  "date": "2025-12-10"
+}
+
+###
+POST http://localhost:5000/api/hotels/search
+Content-Type: application/json
+
+{
+  "city": "chennai"
+}
+
+###
+GET http://localhost:5000/api/bookings/1
