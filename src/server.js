@@ -7,7 +7,27 @@ dotenv.config()
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+
+// Configure CORS to support requests with credentials from your frontend.
+// Set FRONTEND_ORIGIN in Render to your Vercel origin (e.g. https://ashrithafronend.vercel.app)
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true)
+    if (FRONTEND_ORIGIN && origin === FRONTEND_ORIGIN) {
+      return callback(null, true)
+    }
+    return callback(new Error('CORS policy: Origin not allowed'))
+  },
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions))
 
 // simple request logger for debugging
 app.use((req, res, next) => {
