@@ -101,6 +101,20 @@ app.get('/api/bookings/:id', (req, res) => {
   const { id } = req.params
   res.json({ success: true, booking: { id, userId: 1, status: 'confirmed', details: 'Placeholder booking' } })
 })
+app.post('/api/bookings/create', (req, res) => {
+  const { userId, bookingDetails } = req.body || {};
+  res.json({
+    success: true,
+    message: "Booking created successfully (placeholder)",
+    booking: {
+      id: Date.now(),
+      userId: userId || 1,
+      details: bookingDetails || "Sample details",
+      status: "confirmed"
+    }
+  });
+});
+
 
 // 404 handler for unknown routes (must be after all routes)
 app.use((req, res) => {
